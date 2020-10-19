@@ -1,7 +1,29 @@
 import React from 'react';
+import { IContact } from './App';
 import './InformationTable.css';
 
-function InformationTable() {
+interface IInformationTable {
+    list: Array<IContact>
+}
+
+interface IKeys { 
+    first: string; 
+    last: string, 
+    phone: string 
+}
+
+function InformationTable({list}: IInformationTable) {
+
+    const generateList = () => {
+        return list.map((x: IKeys, index: number) => (
+            <tr key={index}>
+                <td>{x.first}</td>
+                <td>{x.last}</td>
+                <td>{x.phone}</td>
+            </tr>
+        ))
+    }
+
     return (
         <table className='table'>
         <thead> 
@@ -12,11 +34,7 @@ function InformationTable() {
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>data one</td>
-                <td>data two</td>
-                <td>data three</td>
-            </tr>
+            {generateList()}
         </tbody> 
         </table>
     );

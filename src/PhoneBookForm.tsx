@@ -1,37 +1,15 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import './PhoneBookForm.css';
+import { IContact } from './App';
 
-function PhoneBookForm() {
-    const [names, setNames] = useState([]);
-    const [first, setFirst] = useState('');
-    const [last, setLast] = useState('');
-    const [phone, setPhone] = useState('');
-  
-    const onClick = (e: any) => {
-      let json = {
-        'first': first,
-        'last': last,
-        'phone': phone
-      }
-  
-      //setNames([...names, json]);
-      sortNames();
-      // names.map((x, index) => {
-      //   <tr>
-      //     {displayNames(x)}
-      //   </tr>
-      // })
-    }
-  
-    // sort by last name
-    const sortNames = () => {
-      // names.sort((a: any, b: any) => {
-      //   a.last - b.last
-      // })
-    }
-  
+interface IPhoneBookForm {
+  contact: IContact,
+  setContact: Dispatch<SetStateAction<IContact>>,
+  addContact: () => void
+}
+
+function PhoneBookForm({contact, setContact, addContact} : IPhoneBookForm) {
     return (
-  
       <form className='form-container' onSubmit={e => { e.preventDefault() }}>
         <label>First Name:</label>
         <br />
@@ -39,7 +17,7 @@ function PhoneBookForm() {
           className='form-inputs'
           name='userFirstname' 
           type='text'
-          onChange={e => setFirst(e.target.value)}
+          onChange={e => setContact({...contact, first: e.target.value})}
         />
         <br/>
         <label>Last Name:</label>
@@ -48,7 +26,7 @@ function PhoneBookForm() {
           className='form-inputs'
           name='userLastname' 
           type='text' 
-          onChange={e => setLast(e.target.value)}
+          onChange={e => setContact({...contact, last: e.target.value})}
         />
         <br />
         <label>Phone:</label>
@@ -57,14 +35,14 @@ function PhoneBookForm() {
           className='form-inputs'
           name='userPhone' 
           type='text'
-          onChange={e => setPhone(e.target.value)}
+          onChange={e => setContact({...contact, phone: e.target.value})}
         />
         <br/>
         <input 
           className='form-inputs'
           type='submit' 
           value='Add User' 
-          onClick={onClick}
+          onClick={addContact}
         />
       </form>
     )
